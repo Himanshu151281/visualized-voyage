@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Briefcase, Bookmark, Share2, Award } from 'lucide-react';
+import { Briefcase, Bookmark, Share2, Award, Bell, ChevronDown } from 'lucide-react';
 import SearchBar from '../ui/SearchBar';
 import { Project, searchProjects } from '@/api/mockData';
 
@@ -37,35 +37,29 @@ const Navbar = ({ onSearch }: NavbarProps) => {
   return (
     <header className="sticky top-0 z-20 bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <nav className="order-2 md:order-1">
-            <ul className="flex space-x-4 overflow-x-auto pb-2 md:pb-0">
-              {links.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <li key={link.path}>
-                    <Link
-                      to={link.path}
-                      className={`navbar-link ${isActive ? 'active' : ''}`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <link.icon size={16} />
-                        <span>{link.label}</span>
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+        <div className="flex justify-between items-center">
+          <div className="hidden md:block"></div>
           
-          <div className="order-1 md:order-2 w-full md:w-1/3">
-            <SearchBar 
-              onSearch={handleSearch} 
-              onFocus={() => setActiveSearch(true)}
-              onBlur={() => setActiveSearch(false)}
-              isActive={activeSearch}
-            />
+          <div className="flex items-center ml-auto">
+            <div className="relative mr-4">
+              <Bell size={20} className="text-gray-600" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">1</span>
+            </div>
+            
+            <div className="flex items-center">
+              <img 
+                src="https://i.pravatar.cc/150?img=3" 
+                alt="User Avatar" 
+                className="w-8 h-8 rounded-full mr-2"
+              />
+              <div className="hidden md:block">
+                <div className="flex items-center">
+                  <p className="font-medium text-sm">Lorem Ips</p>
+                  <ChevronDown size={16} className="ml-1" />
+                </div>
+                <p className="text-gray-500 text-xs">Manager</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 
-import { FileInput } from 'lucide-react';
+import { FileInput, Search, Filter } from 'lucide-react';
 
 const Inputs = () => {
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-6">Inputs</h1>
       
       <div className="bg-white rounded-lg shadow-sm p-8 text-center">
