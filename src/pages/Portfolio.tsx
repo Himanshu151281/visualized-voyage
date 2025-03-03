@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Filter, Search, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -40,7 +39,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/15631d22-a577-4788-9dc1-8ee0621c4d86.png'
+      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=210&h=120'
     },
     {
       id: 2,
@@ -48,7 +47,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/712fc42b-afe3-4485-a044-50f81b46d6d9.png'
+      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=210&h=120'
     },
     {
       id: 3,
@@ -56,7 +55,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/15631d22-a577-4788-9dc1-8ee0621c4d86.png'
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=210&h=120'
     },
     {
       id: 4,
@@ -64,7 +63,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/712fc42b-afe3-4485-a044-50f81b46d6d9.png'
+      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=210&h=120'
     },
     {
       id: 5,
@@ -72,7 +71,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/15631d22-a577-4788-9dc1-8ee0621c4d86.png'
+      image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=210&h=120'
     }
   ];
 
