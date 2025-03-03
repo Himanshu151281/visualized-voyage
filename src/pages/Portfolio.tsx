@@ -40,7 +40,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/843e60d7-050d-41b6-a76f-7302c0169197.png'
+      image: '/lovable-uploads/15631d22-a577-4788-9dc1-8ee0621c4d86.png'
     },
     {
       id: 2,
@@ -48,7 +48,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/96cb9613-e8ae-4b1b-8899-0c37ace5035a.png'
+      image: '/lovable-uploads/712fc42b-afe3-4485-a044-50f81b46d6d9.png'
     },
     {
       id: 3,
@@ -56,7 +56,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/843e60d7-050d-41b6-a76f-7302c0169197.png'
+      image: '/lovable-uploads/15631d22-a577-4788-9dc1-8ee0621c4d86.png'
     },
     {
       id: 4,
@@ -64,7 +64,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/96cb9613-e8ae-4b1b-8899-0c37ace5035a.png'
+      image: '/lovable-uploads/712fc42b-afe3-4485-a044-50f81b46d6d9.png'
     },
     {
       id: 5,
@@ -72,7 +72,7 @@ const Portfolio = () => {
       description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
       language: 'BAHASA SUNDA',
       author: 'Oleh Al-Baiq Samaan',
-      image: '/lovable-uploads/843e60d7-050d-41b6-a76f-7302c0169197.png'
+      image: '/lovable-uploads/15631d22-a577-4788-9dc1-8ee0621c4d86.png'
     }
   ];
 
@@ -89,7 +89,7 @@ const Portfolio = () => {
               className={cn(
                 "px-4 py-2 font-medium whitespace-nowrap",
                 activeTab === tab 
-                  ? "text-primary-blue border-b-2 border-primary-blue" 
+                  ? "text-[#E65525] border-b-2 border-[#E65525]" 
                   : "text-gray-500 hover:text-gray-700"
               )}
               onClick={() => setActiveTab(tab)}
@@ -118,9 +118,9 @@ const Portfolio = () => {
             placeholder="Search a project"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-2 pr-10 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-blue"
+            className="w-full px-4 py-2 pr-10 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#E65525]"
           />
-          <button className="absolute right-0 top-0 h-full px-3 text-white bg-primary-blue rounded-r-md">
+          <button className="absolute right-0 top-0 h-full px-3 text-white bg-[#E65525] rounded-r-md">
             <Search size={20} />
           </button>
         </div>
@@ -134,7 +134,7 @@ const Portfolio = () => {
             className="bg-white rounded-lg shadow-sm overflow-hidden"
           >
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 h-[120px] md:h-auto">
+              <div className="md:w-[210px] h-[120px] md:h-auto">
                 <img 
                   src={item.image} 
                   alt={item.title} 
@@ -154,7 +154,7 @@ const Portfolio = () => {
                     <div className="text-gray-500 text-xs">{item.author}</div>
                   </div>
                   
-                  <button className="mt-2 xs:mt-0 px-4 py-2 bg-amber-400 hover:bg-amber-500 text-white rounded-md flex items-center gap-1">
+                  <button className="mt-2 xs:mt-0 px-4 py-2 bg-[#F5A623] hover:bg-[#E69612] text-white rounded-md flex items-center gap-1">
                     <ShoppingCart size={16} />
                     <span>Add to Cart</span>
                   </button>
@@ -168,7 +168,7 @@ const Portfolio = () => {
       {/* Mobile Filter Button */}
       {isMobile && (
         <div className="fixed bottom-16 right-4">
-          <button className="w-12 h-12 rounded-full bg-primary-blue text-white flex items-center justify-center shadow-lg">
+          <button className="w-12 h-12 rounded-full bg-[#E65525] text-white flex items-center justify-center shadow-lg">
             <Filter size={20} />
           </button>
         </div>

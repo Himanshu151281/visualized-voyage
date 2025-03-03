@@ -42,8 +42,8 @@ const Navbar = ({ onSearch }: NavbarProps) => {
           
           <div className="flex items-center ml-auto">
             <div className="relative mr-4">
-              <Bell size={20} className="text-gray-600" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">1</span>
+              <Bell size={20} className="text-[#E65525]" />
+              <span className="absolute -top-1 -right-1 bg-[#E65525] text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">1</span>
             </div>
             
             <div className="flex items-center">
