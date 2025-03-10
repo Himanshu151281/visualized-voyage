@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { 
   StrapiResponse, 
+  StrapiSingleResponse,
   StrapiProject, 
   StrapiPortfolioItem, 
   StrapiStatistic,
