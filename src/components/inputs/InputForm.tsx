@@ -5,10 +5,13 @@ import { createInput } from '@/services/api';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AlertCircle } from 'lucide-react';
 
+// Define the input type as a union type to ensure correct type comparison
+type InputType = 'text' | 'number' | 'date' | 'file' | 'select';
+
 const InputForm: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
-    type: 'text' as const,
+    type: 'text' as InputType, // Use the union type
     description: '',
     required: false,
     placeholder: '',
@@ -39,7 +42,7 @@ const InputForm: React.FC = () => {
       
       await createInput({
         name: formData.name,
-        type: formData.type as 'text' | 'number' | 'date' | 'file' | 'select',
+        type: formData.type as InputType,
         description: formData.description,
         required: formData.required,
         placeholder: formData.type === 'text' ? formData.placeholder : undefined,
@@ -49,7 +52,7 @@ const InputForm: React.FC = () => {
       // Reset form after successful submission
       setFormData({
         name: '',
-        type: 'text' as const,
+        type: 'text' as InputType,
         description: '',
         required: false,
         placeholder: '',
