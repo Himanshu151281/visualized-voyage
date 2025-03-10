@@ -75,3 +75,15 @@ export interface StrapiStatistic {
   createdAt: string;
   updatedAt: string;
 }
+
+// Input related types
+export interface StrapiInput {
+  name: string;
+  type: 'text' | 'number' | 'date' | 'file' | 'select';
+  description: string;
+  required: boolean;
+  placeholder?: string;
+  options?: string[]; // For select type inputs
+  createdAt: string;
+  updatedAt: string;
+}

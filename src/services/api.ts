@@ -1,10 +1,10 @@
-
 import { toast } from "sonner";
 import { 
   StrapiResponse, 
   StrapiProject, 
   StrapiPortfolioItem, 
-  StrapiStatistic 
+  StrapiStatistic,
+  StrapiInput
 } from "@/types/strapi";
 
 // Configure the Strapi API URL - this should be your Strapi server URL
@@ -321,6 +321,66 @@ const mockStatistics: StrapiResponse<StrapiStatistic> = {
   }
 };
 
+// Mock data for inputs
+const mockInputs: StrapiResponse<StrapiInput> = {
+  data: [
+    {
+      id: 1,
+      attributes: {
+        name: "Project Title",
+        type: "text",
+        description: "Enter the title of your project",
+        required: true,
+        placeholder: "e.g. Website Redesign",
+        createdAt: "2025-01-15T00:00:00.000Z",
+        updatedAt: "2025-03-10T00:00:00.000Z"
+      }
+    },
+    {
+      id: 2,
+      attributes: {
+        name: "Project Category",
+        type: "select",
+        description: "Select the category for your project",
+        required: true,
+        options: ["Web Development", "Mobile", "E-commerce", "Marketing", "CMS", "Analytics"],
+        createdAt: "2025-01-20T00:00:00.000Z",
+        updatedAt: "2025-03-01T00:00:00.000Z"
+      }
+    },
+    {
+      id: 3,
+      attributes: {
+        name: "Due Date",
+        type: "date",
+        description: "When is this project due?",
+        required: true,
+        createdAt: "2025-01-25T00:00:00.000Z",
+        updatedAt: "2025-02-15T00:00:00.000Z"
+      }
+    },
+    {
+      id: 4,
+      attributes: {
+        name: "Project Files",
+        type: "file",
+        description: "Upload any relevant project files",
+        required: false,
+        createdAt: "2025-02-01T00:00:00.000Z",
+        updatedAt: "2025-02-20T00:00:00.000Z"
+      }
+    }
+  ],
+  meta: {
+    pagination: {
+      page: 1,
+      pageSize: 10,
+      pageCount: 1,
+      total: 4
+    }
+  }
+};
+
 // Generic fetch function with error handling and mock data support
 async function fetchFromStrapi<T>(endpoint: string): Promise<T> {
   // Use mock data if we're in a browser environment that can't access localhost
@@ -334,6 +394,8 @@ async function fetchFromStrapi<T>(endpoint: string): Promise<T> {
       return mockPortfolioItems as any as T;
     } else if (endpoint.startsWith("statistics")) {
       return mockStatistics as any as T;
+    } else if (endpoint.startsWith("inputs")) {
+      return mockInputs as any as T;
     }
   }
   
@@ -361,6 +423,8 @@ async function fetchFromStrapi<T>(endpoint: string): Promise<T> {
       return mockPortfolioItems as any as T;
     } else if (endpoint.startsWith("statistics")) {
       return mockStatistics as any as T;
+    } else if (endpoint.startsWith("inputs")) {
+      return mockInputs as any as T;
     }
     
     throw error;
@@ -407,4 +471,60 @@ export async function searchProjects(query: string): Promise<StrapiResponse<Stra
   return fetchFromStrapi<StrapiResponse<StrapiProject>>(
     `projects?filters[title][$containsi]=${query}&populate=teamMembers`
   );
+}
+
+// Inputs API
+export async function fetchInputs(): Promise<StrapiResponse<StrapiInput>> {
+  return fetchFromStrapi<StrapiResponse<StrapiInput>>("inputs");
+}
+
+export async function createInput(input: Omit<StrapiInput, 'createdAt' | 'updatedAt'>): Promise<StrapiSingleResponse<StrapiInput>> {
+  // Mock creating a new input when not connected to Strapi
+  if (shouldUseMockData()) {
+    console.log("Mocking input creation:", input);
+    
+    // Create a mock response with the new input
+    const newInput: StrapiSingleResponse<StrapiInput> = {
+      data: {
+        id: mockInputs.data.length + 1,
+        attributes: {
+          ...input,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      },
+      meta: {}
+    };
+    
+    // Add the new input to our mock data
+    mockInputs.data.push(newInput.data);
+    
+    // Show success toast
+    toast.success("New input field created successfully!");
+    
+    return newInput;
+  }
+  
+  // If not using mock data, make the actual API call
+  try {
+    const response = await fetch(`${STRAPI_API_URL}/inputs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data: input }),
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || "Failed to create input");
+    }
+    
+    toast.success("New input field created successfully!");
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating input:", error);
+    toast.error("Failed to create input field. Please try again.");
+    throw error;
+  }
 }
