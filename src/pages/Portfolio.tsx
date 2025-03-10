@@ -1,6 +1,9 @@
+
 import { useState, useEffect } from 'react';
-import { Filter, Search, ShoppingCart } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { Filter, Search, ShoppingCart, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { fetchPortfolioItems } from '@/services/api';
 
 interface PortfolioItem {
   id: number;
@@ -17,6 +20,16 @@ const Portfolio = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
+  // Fetch portfolio items from Strapi
+  const { 
+    data: portfolioData, 
+    isLoading, 
+    error 
+  } = useQuery({
+    queryKey: ['portfolio-items'],
+    queryFn: fetchPortfolioItems,
+  });
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -32,48 +45,43 @@ const Portfolio = () => {
 
   const tabs = ['Project', 'Saved', 'Shared', 'Achievement'];
   
-  const portfolioItems: PortfolioItem[] = [
-    {
-      id: 1,
-      title: 'Kemampuan Merangkum Tulisan',
-      description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
-      language: 'BAHASA SUNDA',
-      author: 'Oleh Al-Baiq Samaan',
-      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=210&h=120'
-    },
-    {
-      id: 2,
-      title: 'Kemampuan Merangkum Tulisan',
-      description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
-      language: 'BAHASA SUNDA',
-      author: 'Oleh Al-Baiq Samaan',
-      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=210&h=120'
-    },
-    {
-      id: 3,
-      title: 'Kemampuan Merangkum Tulisan',
-      description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
-      language: 'BAHASA SUNDA',
-      author: 'Oleh Al-Baiq Samaan',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=210&h=120'
-    },
-    {
-      id: 4,
-      title: 'Kemampuan Merangkum Tulisan',
-      description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
-      language: 'BAHASA SUNDA',
-      author: 'Oleh Al-Baiq Samaan',
-      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=210&h=120'
-    },
-    {
-      id: 5,
-      title: 'Kemampuan Merangkum Tulisan',
-      description: 'Lorem ipsum Dolor Sit Amet Consectetur. Nulla Risus Malesuada Ac Turpis Tempus.Lorem Ipsum Dolor Sit Amet Consectetur...',
-      language: 'BAHASA SUNDA',
-      author: 'Oleh Al-Baiq Samaan',
-      image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=210&h=120'
-    }
-  ];
+  // Transform Strapi data to the format our component expects
+  const portfolioItems: PortfolioItem[] = portfolioData?.data.map(item => ({
+    id: item.id,
+    title: item.attributes.title,
+    description: item.attributes.description,
+    language: item.attributes.language,
+    author: item.attributes.author,
+    image: item.attributes.image.data?.attributes.url || 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=210&h=120',
+  })) || [];
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="animate-fade-in bg-gray-50 min-h-screen">
+        <h1 className="text-2xl font-bold mb-6 md:mb-2">Portfolio</h1>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-pulse flex flex-col items-center">
+            <div className="h-12 w-12 rounded-full bg-gray-200 mb-4"></div>
+            <div className="h-4 w-32 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="animate-fade-in bg-gray-50 min-h-screen">
+        <h1 className="text-2xl font-bold mb-6 md:mb-2">Portfolio</h1>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
+          <AlertCircle className="text-red-500 mr-3 flex-shrink-0" />
+          <p className="text-red-700">Failed to load portfolio data. Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-in bg-gray-50 min-h-screen">

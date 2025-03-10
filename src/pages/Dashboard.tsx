@@ -1,39 +1,57 @@
 
-import { useState, useEffect } from 'react';
-import { Project, Statistic, fetchProjects, fetchStatistics } from '@/api/mockData';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import ProjectCard from '@/components/dashboard/ProjectCard';
 import StatCard from '@/components/dashboard/StatCard';
 import { AlertCircle } from 'lucide-react';
+import { fetchProjects, fetchStatistics } from '@/services/api';
+import { StrapiData, StrapiProject, StrapiStatistic } from '@/types/strapi';
 
 const Dashboard = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [statistics, setStatistics] = useState<Statistic[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Fetch projects using React Query
+  const { 
+    data: projectsData, 
+    isLoading: projectsLoading, 
+    error: projectsError 
+  } = useQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+  });
 
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const [projectsData, statsData] = await Promise.all([
-          fetchProjects(),
-          fetchStatistics(),
-        ]);
-        setProjects(projectsData);
-        setStatistics(statsData);
-        setError(null);
-      } catch (err) {
-        console.error('Failed to load dashboard data:', err);
-        setError('Failed to load dashboard data. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Fetch statistics using React Query
+  const { 
+    data: statisticsData, 
+    isLoading: statsLoading, 
+    error: statsError 
+  } = useQuery({
+    queryKey: ['statistics'],
+    queryFn: fetchStatistics,
+  });
 
-    loadData();
-  }, []);
+  // Determine if we're in a loading state
+  const isLoading = projectsLoading || statsLoading;
+  
+  // Determine if we have an error
+  const error = projectsError || statsError;
 
-  if (loading) {
+  // Extract projects from Strapi format
+  const projects = projectsData?.data.map(item => ({
+    id: item.id,
+    ...item.attributes,
+    teamMembers: item.attributes.teamMembers.map(member => ({
+      id: member.id,
+      name: member.name,
+      avatar: member.avatar
+    }))
+  })) || [];
+
+  // Extract statistics from Strapi format
+  const statistics = statisticsData?.data.map(item => ({
+    id: item.id,
+    ...item.attributes
+  })) || [];
+
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-pulse flex flex-col items-center">
@@ -48,7 +66,7 @@ const Dashboard = () => {
     return (
       <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
         <AlertCircle className="text-red-500 mr-3 flex-shrink-0" />
-        <p className="text-red-700">{error}</p>
+        <p className="text-red-700">Failed to load dashboard data. Please try again later.</p>
       </div>
     );
   }
