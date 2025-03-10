@@ -8,7 +8,7 @@ import { AlertCircle } from 'lucide-react';
 const InputForm: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
-    type: 'text' as const,
+    type: 'text' as 'text' | 'number' | 'date' | 'file' | 'select',
     description: '',
     required: false,
     placeholder: '',
@@ -49,15 +49,18 @@ const InputForm: React.FC = () => {
       // Reset form after successful submission
       setFormData({
         name: '',
-        type: 'text' as const,
+        type: 'text' as 'text' | 'number' | 'date' | 'file' | 'select',
         description: '',
         required: false,
         placeholder: '',
         options: ''
       });
       
+      toast.success("Input field created successfully!");
+      
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Failed to create input field");
     } finally {
       setIsSubmitting(false);
     }
